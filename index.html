@@ -502,14 +502,32 @@ body[data-theme="light"] .review-text{color:#343b4b}
 <script>
 const fmt=n=>new Intl.NumberFormat('fa-IR').format(Number(n))+' تومان';
 
-const themeBtn=document.getElementById('themeBtn');
-function setTheme(theme){
-document.body.dataset.theme=theme;
-localStorage.setItem('dragonSteveTheme',theme);
-themeBtn.textContent=theme==='light'?'🌙 حالت تاریک':'🌞 حالت روشن';
+
+const themeBtn = document.getElementById('themeBtn');
+
+function setTheme(theme) {
+    document.body.dataset.theme = theme;
+    document.documentElement.dataset.theme = theme;
+
+    localStorage.setItem('dragonSteveTheme', theme);
+
+    if (themeBtn) {
+        themeBtn.textContent = theme === 'light'
+            ? '🌙 حالت تاریک'
+            : '🌞 حالت روشن';
+    }
 }
-setTheme(localStorage.getItem('dragonSteveTheme')||'dark');
-themeBtn.onclick=()=>setTheme(document.body.dataset.theme==='dark'?'light':'dark');
+
+const savedTheme = localStorage.getItem('dragonSteveTheme') || 'dark';
+setTheme(savedTheme);
+
+if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+        const current = document.body.dataset.theme;
+        setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+}
+
 
 document.querySelectorAll('.tab').forEach(btn=>{
 btn.onclick=()=>{
