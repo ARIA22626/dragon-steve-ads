@@ -500,57 +500,526 @@ body[data-theme="light"] .review-text{color:#343b4b}
 </div>
 
 <script>
-const fmt=n=>new Intl.NumberFormat('fa-IR').format(Number(n))+' تومان';
+const fmt = n => new Intl.NumberFormat('fa-IR').format(Number(n)) + ' تومان';
 
+// =====================================
+// 🌗 سیستم تغییر حالت روشن و تاریک
+// =====================================
 
 const themeBtn = document.getElementById('themeBtn');
 
 function setTheme(theme) {
     document.body.dataset.theme = theme;
     document.documentElement.dataset.theme = theme;
-
     localStorage.setItem('dragonSteveTheme', theme);
 
     if (themeBtn) {
-        themeBtn.textContent = theme === 'light'
-            ? '🌙 حالت تاریک'
-            : '🌞 حالت روشن';
+        themeBtn.textContent =
+            theme === 'light' ? '🌙 حالت تاریک' : '🌞 حالت روشن';
     }
 }
 
-const savedTheme = localStorage.getItem('dragonSteveTheme') || 'dark';
-setTheme(savedTheme);
+setTheme(localStorage.getItem('dragonSteveTheme') || 'dark');
 
 if (themeBtn) {
-    themeBtn.addEventListener('click', function () {
+    themeBtn.addEventListener('click', () => {
         const current = document.body.dataset.theme;
         setTheme(current === 'dark' ? 'light' : 'dark');
     });
 }
 
+// =====================================
+// 📑 سیستم تب ها
+// =====================================
 
-document.querySelectorAll('.tab').forEach(btn=>{
-btn.onclick=()=>{
-document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-btn.classList.add('active');
-document.querySelectorAll('section[id]').forEach(s=>s.classList.add('hidden'));
-document.getElementById(btn.dataset.tab).classList.remove('hidden');
-};
+document.querySelectorAll('.tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(x =>
+            x.classList.remove('active')
+        );
+
+        btn.classList.add('active');
+
+        document.querySelectorAll('section[id]').forEach(s =>
+            s.classList.add('hidden')
+        );
+
+        const target = document.getElementById(btn.dataset.tab);
+
+        if (target) target.classList.remove('hidden');
+    });
 });
 
-function choosePlan(name){
-document.querySelector('[data-tab="order"]').click();
-document.getElementById('plan').value=name;
-document.getElementById('success').style.display='none';
-window.scrollTo({top:document.getElementById('order').offsetTop-10,behavior:'smooth'});
+// =====================================
+// 🛒 انتخاب تعرفه و سفارش
+// =====================================
+
+function choosePlan(name) {
+    document.querySelector('[data-tab="order"]').click();
+
+    document.getElementById('plan').value = name;
+
+    document.getElementById('success').style.display = 'none';
+
+    window.scrollTo({
+        top: document.getElementById('order').offsetTop - 10,
+        behavior: 'smooth'
+    });
 }
 
-document.querySelectorAll('.buy[data-plan]').forEach(btn=>{
-btn.onclick=()=>choosePlan(btn.dataset.plan);
+document.querySelectorAll('.buy[data-plan]').forEach(btn => {
+    btn.addEventListener('click', () => {
+        choosePlan(btn.dataset.plan);
+    });
 });
 
-function orderText(){
-const sel=document.getElementById('plan');
-const opt=sel.options[sel.selectedIndex];
-return `🐉 سفارش تبلیغات دراگن استیو
-نوع تبلیغ: ${sel.value||'انتخاب نشد
+// =====================================
+// 📝 ساخت متن سفارش
+// =====================================
+
+function orderText() {
+    const sel = document.getElementById('plan');
+    const opt = sel.options[sel.selectedIndex];
+
+    return `🐉 سفارش تبلیغات دراگن استیو
+
+نوع تبلیغ: ${sel.value || 'انتخاب نشد'}
+مبلغ: ${opt.dataset.price ? fmt(opt.dataset.price) : 'نامشخص'}
+آیدی روبیکا: ${document.getElementById('rubika').value}
+جزئیات تبلیغ:
+${document.getElementById('details').value}
+
+کانال: @ARIA22626
+مدیریت: @DragonStev`;
+}
+
+// =====================================
+// 📋 کپی متن سفارش
+// =====================================
+
+document.getElementById('copyOrder').addEventListener('click', async () => {
+    const text = orderText();
+
+    try {
+        await navigator.clipboard.writeText(text);
+        alert('✅ متن سفارش کپی شد.');
+    } catch (error) {
+        const area = document.createElement('textarea');
+        area.value = text;
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+        alert('متن سفارش کپی شد.');
+    }
+});
+
+// =====================================
+// 📦 ذخیره سفارش ها
+// =====================================
+
+function getOrders() {
+    return JSON.parse(localStorage.getItem('dragonSteveOrders') || '[]');
+}
+
+function saveOrders(orders) {
+    localStorage.setItem('dragonSteveOrders', JSON.stringify(orders));
+}
+
+document.getElementById('orderForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const sel = document.getElementById('plan');
+    const opt = sel.options[sel.selectedIndex];
+
+    const order = {
+        id: Date.now(),
+        date: new Date().toLocaleString('fa-IR'),
+        plan: sel.value,
+        price: Number(opt.dataset.price || 0),
+        rubika: document.getElementById('rubika').value,
+        details: document.getElementById('details').value
+    };
+
+    const orders = getOrders();
+    orders.push(order);
+
+    try {
+        saveOrders(orders);
+    } catch (error) {
+        alert('فضای ذخیره مرورگر کافی نیست.');
+        return;
+    }
+
+    const success = document.getElementById('success');
+    success.style.display = 'block';
+    success.textContent =
+        '✅ سفارش در همین مرورگر ذخیره شد. برای هماهنگی و ارسال سفارش به مدیریت پیام بدهید: @DragonStev';
+
+    renderOrders();
+});
+
+// =====================================
+// ⚙️ منوی مدیریت
+// =====================================
+
+const menuBtn = document.getElementById('menuBtn');
+const sideMenu = document.getElementById('sideMenu');
+
+menuBtn.addEventListener('click', () => {
+    sideMenu.classList.toggle('open');
+});
+
+document.addEventListener('click', e => {
+    if (!sideMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+        sideMenu.classList.remove('open');
+    }
+});
+
+// =====================================
+// 🔐 ورود به مدیریت
+// =====================================
+
+// رمز پیش فرض را با رمز شخصی خودت عوض کن.
+// توجه: رمز داخل کد سایت عمومی قابل مشاهده است.
+
+const ADMIN_PASSWORD = 'CHANGE-ME-123';
+
+let adminDestination = 'orders';
+
+const passwordOverlay = document.getElementById('passwordOverlay');
+
+function requestAdmin(destination) {
+    adminDestination = destination;
+    sideMenu.classList.remove('open');
+    document.getElementById('passwordError').textContent = '';
+    document.getElementById('adminPassword').value = '';
+    passwordOverlay.classList.add('open');
+}
+
+document.getElementById('openPurchases').addEventListener('click', () => {
+    requestAdmin('orders');
+});
+
+document.getElementById('openReviews').addEventListener('click', () => {
+    requestAdmin('reviews');
+});
+
+document.getElementById('loginAdmin').addEventListener('click', () => {
+    const password = document.getElementById('adminPassword').value;
+
+    if (password !== ADMIN_PASSWORD) {
+        document.getElementById('passwordError').textContent =
+            '❌ رمز وارد شده اشتباه است.';
+        return;
+    }
+
+    passwordOverlay.classList.remove('open');
+
+    if (adminDestination === 'orders') {
+        document.getElementById('ordersOverlay').classList.add('open');
+        renderOrders();
+    } else {
+        document.getElementById('reviewsOverlay').classList.add('open');
+        renderReviewAdmin();
+    }
+});
+
+document.getElementById('adminPassword').addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+        document.getElementById('loginAdmin').click();
+    }
+});
+
+document.getElementById('closePassword').addEventListener('click', () => {
+    passwordOverlay.classList.remove('open');
+});
+
+// =====================================
+// 🧾 نمایش سفارش ها در مدیریت
+// =====================================
+
+function renderOrders() {
+    const orders = getOrders();
+    const tbody = document.getElementById('ordersBody');
+    const empty = document.getElementById('emptyOrders');
+
+    tbody.replaceChildren();
+
+    empty.style.display = orders.length ? 'none' : 'block';
+
+    orders.forEach((order, index) => {
+        const tr = document.createElement('tr');
+
+        [
+            String(index + 1),
+            order.date,
+            order.plan,
+            fmt(order.price),
+            order.rubika,
+            order.details
+        ].forEach(value => {
+            const td = document.createElement('td');
+            td.textContent = value;
+            tr.appendChild(td);
+        });
+
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById('orderCount').textContent =
+        fmt(orders.length);
+
+    document.getElementById('orderTotal').textContent =
+        fmt(orders.reduce((sum, order) => sum + Number(order.price || 0), 0));
+
+    document.getElementById('lastOrder').textContent =
+        orders.length ? orders[orders.length - 1].date : '—';
+}
+
+document.getElementById('closeOrders').addEventListener('click', () => {
+    document.getElementById('ordersOverlay').classList.remove('open');
+});
+
+document.getElementById('clearOrders').addEventListener('click', () => {
+    if (!confirm('همه سفارش ها حذف شوند؟')) return;
+
+    saveOrders([]);
+    renderOrders();
+});
+
+document.getElementById('exportOrders').addEventListener('click', () => {
+    const blob = new Blob(
+        [JSON.stringify(getOrders(), null, 2)],
+        { type: 'application/json' }
+    );
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+
+    a.href = url;
+    a.download = 'dragon-steve-orders.json';
+    a.click();
+
+    URL.revokeObjectURL(url);
+});
+
+// =====================================
+// ⭐ سیستم رضایت خریداران
+// =====================================
+
+function getReviews() {
+    return JSON.parse(localStorage.getItem('dragonSteveReviews') || '[]');
+}
+
+function saveReviews(reviews) {
+    localStorage.setItem('dragonSteveReviews', JSON.stringify(reviews));
+}
+
+function renderReviews() {
+    const grid = document.getElementById('reviewsGrid');
+    const reviews = getReviews();
+
+    grid.replaceChildren();
+
+    reviews.forEach(review => {
+        const card = document.createElement('article');
+        card.className = 'review-card';
+
+        const img = document.createElement('img');
+        img.className = 'review-photo';
+        img.src = review.image;
+        img.alt = 'عکس رضایت خریدار';
+
+        const meta = document.createElement('div');
+        meta.className = 'review-meta';
+
+        const name = document.createElement('div');
+        name.className = 'review-name';
+        name.textContent = review.name;
+
+        const date = document.createElement('div');
+        date.className = 'review-date';
+        date.textContent = review.date;
+
+        const text = document.createElement('div');
+        text.className = 'review-text';
+        text.textContent = review.text;
+
+        meta.append(name, date);
+        card.append(img, meta, text);
+        grid.appendChild(card);
+    });
+
+    if (!reviews.length) {
+        const empty = document.createElement('div');
+        empty.className = 'review-empty';
+        empty.textContent = 'هنوز رضایتی منتشر نشده است.';
+        grid.appendChild(empty);
+    }
+}
+
+// =====================================
+// 📷 پیش نمایش عکس رضایت
+// =====================================
+
+const reviewImage = document.getElementById('reviewImage');
+const reviewPreview = document.getElementById('reviewPreview');
+
+reviewImage.addEventListener('change', () => {
+    const file = reviewImage.files[0];
+
+    if (!file) {
+        reviewPreview.style.display = 'none';
+        return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+        alert('لطفاً یک فایل تصویری انتخاب کن.');
+        reviewImage.value = '';
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+        reviewPreview.src = reader.result;
+        reviewPreview.style.display = 'block';
+    };
+
+    reader.readAsDataURL(file);
+});
+
+// =====================================
+// ➕ افزودن رضایت جدید
+// =====================================
+
+document.getElementById('reviewForm').addEventListener('submit', e => {
+    e.preventDefault();
+
+    const file = reviewImage.files[0];
+
+    if (!file) {
+        alert('لطفاً عکس رضایت را انتخاب کن.');
+        return;
+    }
+
+    if (file.size > 1500000) {
+        alert('حجم عکس باید کمتر از ۱.۵ مگابایت باشد.');
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+        const reviews = getReviews();
+
+        reviews.push({
+            id: Date.now(),
+            name: document.getElementById('reviewName').value,
+            text: document.getElementById('reviewText').value,
+            image: reader.result,
+            date: new Date().toLocaleDateString('fa-IR')
+        });
+
+        try {
+            saveReviews(reviews);
+        } catch (error) {
+            alert('فضای ذخیره مرورگر کافی نیست. عکس کوچک‌تری انتخاب کن.');
+            return;
+        }
+
+        document.getElementById('reviewForm').reset();
+        reviewPreview.style.display = 'none';
+
+        const message = document.getElementById('reviewAdminSuccess');
+        message.textContent = '✅ رضایت با موفقیت ذخیره شد.';
+        message.style.display = 'block';
+
+        renderReviewAdmin();
+        renderReviews();
+    };
+
+    reader.readAsDataURL(file);
+});
+
+// =====================================
+// 📋 مدیریت رضایت ها
+// =====================================
+
+function renderReviewAdmin() {
+    const list = document.getElementById('reviewAdminList');
+    const reviews = getReviews();
+
+    list.replaceChildren();
+
+    reviews.forEach(review => {
+        const item = document.createElement('div');
+        item.className = 'review-admin-item';
+
+        const left = document.createElement('div');
+        left.className = 'review-admin-left';
+
+        const img = document.createElement('img');
+        img.className = 'review-thumb';
+        img.src = review.image;
+        img.alt = 'عکس رضایت';
+
+        const info = document.createElement('div');
+        info.className = 'review-admin-info';
+
+        const title = document.createElement('div');
+        title.className = 'review-admin-title';
+        title.textContent = review.name;
+
+        const description = document.createElement('div');
+        description.className = 'review-admin-text';
+        description.textContent = review.text;
+
+        info.append(title, description);
+        left.append(img, info);
+
+        const del = document.createElement('button');
+        del.className = 'admin-btn danger';
+        del.textContent = '🗑️ حذف';
+
+        del.addEventListener('click', () => {
+            if (!confirm('این رضایت حذف شود؟')) return;
+
+            saveReviews(getReviews().filter(x => x.id !== review.id));
+
+            renderReviewAdmin();
+            renderReviews();
+        });
+
+        item.append(left, del);
+        list.appendChild(item);
+    });
+
+    if (!reviews.length) {
+        list.textContent = 'هنوز رضایتی ثبت نشده است.';
+    }
+}
+
+document.getElementById('clearReviews').addEventListener('click', () => {
+    if (!confirm('تمام رضایت ها حذف شوند؟')) return;
+
+    saveReviews([]);
+    renderReviewAdmin();
+    renderReviews();
+});
+
+document.getElementById('closeReviews').addEventListener('click', () => {
+    document.getElementById('reviewsOverlay').classList.remove('open');
+});
+
+// =====================================
+// 🚀 راه اندازی اولیه
+// =====================================
+
+renderReviews();
+renderOrders();
+
+</script>
+</body>
+</html>
