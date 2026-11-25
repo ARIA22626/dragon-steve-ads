@@ -6,325 +6,383 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>فروش تبلیغات دراگن استیو | Dragon Steve</title>
 <meta name="description" content="تعرفه و ثبت سفارش تبلیغات دراگن استیو">
+
 <style>
 :root{
---bg:#08090d;--panel:#11131a;--line:#2b2f3b;
---text:#f7f8fb;--muted:#aeb4c2;--accent:#ffb000;
---accent2:#ff6a00;--shadow:0 18px 60px #0006;
+--bg:#08090d;
+--panel:#11131a;
+--line:#2b2f3b;
+--text:#f7f8fb;
+--muted:#aeb4c2;
+--accent:#ffb000;
+--accent2:#ff6a00;
 }
 *{box-sizing:border-box}
 body{
-margin:0;font-family:Tahoma,Arial,sans-serif;color:var(--text);
+margin:0;
+font-family:Tahoma,Arial,sans-serif;
+color:var(--text);
 background:radial-gradient(circle at 20% 0%,#ffb00018,transparent 30%),var(--bg);
-min-height:100vh
+min-height:100vh;
+}
+body[data-theme="light"]{
+--bg:#f3f5f9;
+--panel:#fff;
+--line:#d8deea;
+--text:#202536;
+--muted:#626b7c;
+background:var(--bg);
+color:var(--text);
 }
 a{color:inherit;text-decoration:none}
 button{font-family:inherit}
 .wrap{max-width:1100px;margin:auto;padding:28px 16px 50px}
+.hero,.card,.stat{
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:20px;
+padding:18px;
+}
 .hero{
 background:linear-gradient(135deg,#ffb00026,#ff6a000d);
-border:1px solid #ffb00040;border-radius:28px;padding:32px;
-box-shadow:var(--shadow)
+border-color:#ffb00055;
+padding:30px;
 }
-.dragon{font-size:58px}
-h1{margin:12px 0 8px;font-size:34px}
-h2{margin:0 0 8px;font-size:25px}
-h3{margin:0 0 10px;font-size:20px}
-.sub{color:var(--muted);line-height:1.9}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}
-.stat,.card{
-background:var(--panel);border:1px solid var(--line);
-border-radius:20px;padding:18px
+.dragon{font-size:55px}
+h1{font-size:32px;margin:12px 0}
+h2{margin:0 0 10px}
+h3{margin:0 0 10px}
+.sub{color:var(--muted);line-height:2}
+.stats,.grid,.reviews-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:14px;
+margin-top:18px;
 }
-.stat b{display:block;font-size:27px;color:var(--accent);margin-bottom:5px}
-.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 18px}
-.tab{
-border:1px solid var(--line);background:var(--panel);color:var(--text);
-padding:13px 18px;border-radius:14px;cursor:pointer;font-weight:bold
+.stat b{
+display:block;
+font-size:25px;
+color:var(--accent);
+margin-bottom:7px;
 }
-.tab.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#17100a}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.price{font-size:30px;font-weight:900;color:var(--accent);margin:8px 0 12px}
-.price small{font-size:14px;color:var(--muted)}
-.tag{
-display:inline-block;padding:6px 10px;border-radius:999px;
-background:#ffb00020;border:1px solid #ffb00040;color:#ffd26a;font-size:12px
+.tabs,.actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin:22px 0;
 }
-.features{color:var(--muted);line-height:2;margin:0;padding-right:20px}
-.buy{
-width:100%;margin-top:15px;border:0;border-radius:14px;padding:13px;
+button{
+cursor:pointer;
+}
+.tab,.secondary,.admin-btn,.theme-btn{
+background:var(--panel);
+color:var(--text);
+border:1px solid var(--line);
+padding:13px 16px;
+border-radius:13px;
+font-weight:bold;
+}
+.tab.active,.buy{
 background:linear-gradient(135deg,var(--accent),var(--accent2));
-color:#1b1307;font-weight:900;cursor:pointer
+color:#211405;
+border:0;
 }
-.note{
-margin-top:16px;padding:14px;border-radius:15px;
-background:#46d48312;border:1px solid #46d48340;color:#b7f1cd;line-height:1.9
+.buy{
+width:100%;
+padding:14px;
+border-radius:13px;
+font-weight:900;
+margin-top:12px;
 }
-.section{margin-top:26px}
+.price{
+font-size:28px;
+font-weight:900;
+color:var(--accent);
+margin:12px 0;
+}
+.price small{font-size:13px;color:var(--muted)}
+.tag{
+display:inline-block;
+background:#ffb00020;
+border:1px solid #ffb00055;
+color:#ffcb55;
+border-radius:20px;
+padding:6px 12px;
+font-size:12px;
+}
+.features{
+color:var(--muted);
+line-height:2.2;
+padding-right:20px;
+}
+.section{margin-top:25px}
 .hidden{display:none!important}
-.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.field{display:flex;flex-direction:column;gap:7px}
+.note,.paybox,.success{
+padding:15px;
+border-radius:14px;
+background:#46d48312;
+border:1px solid #46d48340;
+line-height:2;
+margin-top:15px;
+}
+.form,.review-form{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+margin-top:18px;
+}
+.field{display:flex;flex-direction:column;gap:8px}
 label{font-size:13px;color:var(--muted)}
 input,select,textarea{
-width:100%;border:1px solid var(--line);background:#0d0f15;color:var(--text);
-border-radius:13px;padding:12px;outline:none;font-family:inherit
+width:100%;
+background:var(--bg);
+color:var(--text);
+border:1px solid var(--line);
+border-radius:12px;
+padding:13px;
+font-family:inherit;
 }
-textarea{min-height:115px;resize:vertical}
+textarea{min-height:110px}
 .full{grid-column:1/-1}
-.paybox{
-margin-top:14px;padding:16px;border-radius:16px;
-border:1px dashed #4b5160;background:#0c0e14;line-height:2
+.success{display:none;color:#55d68c}
+.footer{
+text-align:center;
+color:var(--muted);
+font-size:12px;
+line-height:2.5;
+margin-top:30px;
 }
-.secondary,.admin-btn{
-background:#1a1d26;color:#fff;border:1px solid var(--line);
-border-radius:13px;padding:12px 16px;cursor:pointer
+.topbar{
+position:fixed;
+top:12px;
+left:12px;
+z-index:1000;
+display:flex;
+gap:8px;
 }
-.actions{display:flex;gap:10px;flex-wrap:wrap}
-.success{
-margin-top:14px;padding:13px;border-radius:13px;
-background:#46d48319;border:1px solid #46d48340;
-color:#c8f8d9;display:none;line-height:1.8
-}
-.footer{text-align:center;color:#858b99;margin-top:30px;font-size:12px;line-height:2}
-.topbar{position:fixed;top:12px;left:12px;z-index:1000;display:flex;gap:8px}
 .menu-btn{
-width:48px;height:48px;border:0;border-radius:14px;background:#d71920;
-display:flex;flex-direction:column;align-items:center;justify-content:center;
-gap:5px;cursor:pointer
+width:48px;height:48px;
+background:#d71920;
+border:0;border-radius:13px;
+display:flex;flex-direction:column;
+align-items:center;justify-content:center;gap:5px;
 }
-.menu-btn span{width:25px;height:3px;border-radius:99px;background:#fff}
-.theme-btn{
-height:48px;padding:0 13px;border:1px solid #ffb00066;
-border-radius:14px;background:#171a23;color:#fff;font-weight:bold;cursor:pointer
-}
+.menu-btn span{width:24px;height:3px;background:white}
 .side-menu{
-position:fixed;top:68px;left:12px;z-index:999;width:230px;
-background:#11131a;border:1px solid #343946;border-radius:18px;
-padding:10px;box-shadow:0 20px 60px #0008;display:none
+position:fixed;
+top:68px;left:12px;
+z-index:999;
+width:230px;
+padding:12px;
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:17px;
+display:none;
 }
 .side-menu.open{display:block}
-.menu-title{font-weight:900;padding:10px;color:#fff}
 .menu-item{
-width:100%;text-align:right;border:0;background:#171a23;color:#fff;
-padding:12px;border-radius:12px;cursor:pointer;font-weight:bold;margin:3px 0
+width:100%;
+padding:13px;
+margin-top:7px;
+background:var(--bg);
+color:var(--text);
+border:1px solid var(--line);
+border-radius:11px;
+text-align:right;
 }
-.admin-overlay{
-position:fixed;inset:0;background:#000b;z-index:1100;
-display:none;align-items:center;justify-content:center;padding:16px
+.overlay{
+position:fixed;
+inset:0;
+z-index:1100;
+background:#000b;
+display:none;
+align-items:center;
+justify-content:center;
+padding:15px;
 }
-.admin-overlay.open{display:flex}
-.admin-modal{
-width:min(1050px,100%);max-height:88vh;overflow:auto;
-background:#0d0f15;border:1px solid #343946;border-radius:22px;padding:18px
+.overlay.open{display:flex}
+.modal{
+width:min(950px,100%);
+max-height:90vh;
+overflow:auto;
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:20px;
+padding:18px;
 }
-.password-box{
-width:min(420px,100%);background:#11131a;
-border:1px solid #343946;border-radius:20px;padding:20px
+.admin-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+flex-wrap:wrap;
 }
-.admin-head{display:flex;justify-content:space-between;gap:12px;align-items:center}
-.admin-actions{display:flex;gap:8px;flex-wrap:wrap}
-.admin-btn.danger{border-color:#81252b;color:#ff9aa0}
-.admin-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
-.admin-stat{background:#11131a;border:1px solid #2b2f3b;border-radius:15px;padding:14px}
-.admin-stat b{display:block;font-size:22px;color:#ffb000}
-.orders-wrap{overflow-x:auto}
-.orders-table{width:100%;border-collapse:collapse;min-width:760px}
+.orders-table{
+width:100%;
+border-collapse:collapse;
+min-width:650px;
+}
 .orders-table th,.orders-table td{
-border-bottom:1px solid #292d38;padding:11px;text-align:right
+padding:12px;
+border-bottom:1px solid var(--line);
+text-align:right;
 }
-.orders-table th{color:#ffd26a;background:#11131a}
-.empty-orders,.review-empty{
-padding:22px;text-align:center;color:#9fa6b5
-}
-.password-error{color:#ff8b93;font-size:13px;margin-top:8px}
-.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.orders-wrap{overflow-x:auto}
 .review-card{
-background:#11131a;border:2px solid #3b3f4d;border-radius:20px;
-padding:16px;overflow:hidden
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:17px;
+padding:13px;
 }
 .review-photo{
-width:100%;max-height:420px;object-fit:contain;border-radius:14px;
-background:#0b0d12;margin-bottom:12px;display:block
+width:100%;
+max-height:350px;
+object-fit:contain;
+border-radius:12px;
 }
-.review-meta{display:flex;justify-content:space-between;gap:10px;margin-bottom:9px}
-.review-name{font-weight:900;color:#fff;font-size:17px}
-.review-date{font-size:11px;color:#9299a8}
-.review-text{color:#dfe3eb;line-height:1.95;white-space:pre-wrap}
-.review-form{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.review-text{white-space:pre-wrap;line-height:2}
 .review-preview{
-display:none;margin-top:10px;max-height:260px;width:100%;
-object-fit:contain;border-radius:14px
+max-width:100%;
+max-height:200px;
+display:none;
 }
-.review-admin-list{display:grid;gap:10px;margin-top:16px}
-.review-admin-item{
-display:flex;gap:12px;align-items:center;justify-content:space-between;
-background:#11131a;border:1px solid #2b2f3b;border-radius:15px;padding:12px
-}
-.review-admin-left{display:flex;gap:12px;align-items:center;min-width:0}
-.review-thumb{width:64px;height:64px;object-fit:cover;border-radius:10px}
-.review-admin-info{min-width:0}
-.review-admin-title{font-weight:900}
-.review-admin-text{font-size:12px;color:#aeb4c2}
 .channel-ad{
-margin:0 0 20px;padding:20px 16px;text-align:center;
-border:1px solid #ffb00055;border-radius:20px;
-background:linear-gradient(120deg,#ffb00026,#ff6a001a)
+text-align:center;
+padding:20px;
+border:1px solid #ffb00055;
+border-radius:18px;
+margin-bottom:20px;
+background:#ffb00012;
 }
-.channel-ad p{color:var(--muted);line-height:1.9}
 .channel-ad a{
-display:inline-block;padding:11px 18px;border-radius:12px;
+display:inline-block;
+padding:12px 18px;
+border-radius:12px;
 background:linear-gradient(135deg,var(--accent),var(--accent2));
-color:#1b1307;font-weight:900
+color:#211405;
+font-weight:bold;
 }
-body[data-theme="light"]{
---bg:#f3f5f9;--panel:#fff;--line:#d8deea;
---text:#202536;--muted:#626b7c;
-background:#f3f5f9;color:var(--text)
+@media(max-width:700px){
+.stats,.grid,.reviews-grid,.form,.review-form{
+grid-template-columns:1fr;
 }
-body[data-theme="light"] .stat,
-body[data-theme="light"] .card,
-body[data-theme="light"] .side-menu,
-body[data-theme="light"] .admin-modal,
-body[data-theme="light"] .password-box,
-body[data-theme="light"] .review-card,
-body[data-theme="light"] .admin-stat{background:#fff;color:#202536;border-color:#d8deea}
-body[data-theme="light"] .tab,
-body[data-theme="light"] .menu-item,
-body[data-theme="light"] .secondary,
-body[data-theme="light"] .admin-btn,
-body[data-theme="light"] .theme-btn{background:#edf0f5;color:#202536;border-color:#d8deea}
-body[data-theme="light"] input,
-body[data-theme="light"] select,
-body[data-theme="light"] textarea{background:#fff;color:#202536;border-color:#d8deea}
-body[data-theme="light"] .paybox,
-body[data-theme="light"] .orders-table th{background:#edf0f5;color:#202536}
-body[data-theme="light"] .review-name,
-body[data-theme="light"] .orders-table td{color:#202536}
-body[data-theme="light"] .review-text{color:#343b4b}
-@media(max-width:850px){.grid,.reviews-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:620px){
-.stats,.grid,.form,.reviews-grid,.review-form{grid-template-columns:1fr}
-.hero{padding:22px}.dragon{font-size:48px}h1{font-size:28px}
+.hero{padding:20px}
+h1{font-size:26px}
 }
 </style>
 </head>
+
 <body>
 
 <div class="topbar">
-<button class="menu-btn" id="menuBtn" aria-label="منوی مدیریت">
+<button class="menu-btn" id="menuBtn" aria-label="منو">
 <span></span><span></span><span></span>
 </button>
 <button class="theme-btn" id="themeBtn">🌞 حالت روشن</button>
 </div>
 
 <div class="side-menu" id="sideMenu">
-<div class="menu-title">⚙️ منوی مدیریت</div>
-<button class="menu-item" id="openPurchases">🧾 خریدها / سفارش‌ها</button>
+<b>⚙️ منوی مدیریت</b>
+<button class="menu-item" id="openPurchases">🧾 خریدها و سفارش‌ها</button>
 <button class="menu-item" id="openReviews">⭐ مدیریت رضایت‌ها</button>
 </div>
-<div class="admin-overlay" id="passwordOverlay">
-<div class="password-box">
-<h3 id="passwordTitle">🔐 ورود به مدیریت</h3>
-<div class="sub">رمز مدیریت را وارد کنید.</div>
-<input id="adminPassword" type="password" placeholder="رمز مدیریت">
-<div class="actions" style="margin-top:12px">
-<button class="buy" id="loginAdmin" type="button">ورود</button>
-<button class="secondary" id="closePassword" type="button">بستن</button>
+
+<!-- ورود مدیریت -->
+<div class="overlay" id="passwordOverlay">
+<div class="modal" style="max-width:400px">
+<h3>🔐 ورود به مدیریت</h3>
+<input type="password" id="adminPassword" placeholder="رمز مدیریت">
+<p id="passwordError" style="color:#ff7777"></p>
+<button class="buy" id="loginAdmin">ورود</button>
+<button class="secondary" id="closePassword">بستن</button>
 </div>
-<div class="password-error" id="passwordError"></div>
 </div>
-</div>
-<div class="admin-overlay" id="reviewsOverlay">
-<div class="admin-modal">
+
+<!-- مدیریت رضایت ها -->
+<div class="overlay" id="reviewsOverlay">
+<div class="modal">
 <div class="admin-head">
-<div>
 <h2>⭐ مدیریت رضایت‌ها</h2>
-<div class="sub">افزودن و حذف رضایت خریداران</div>
+<button class="secondary" id="closeReviews">بستن ✕</button>
 </div>
-<div class="admin-actions">
-<button class="admin-btn danger" id="clearReviews">🗑️ حذف همه</button>
-<button class="admin-btn" id="closeReviews">✕ بستن</button>
-</div>
-</div>
-<div class="card" style="margin-top:14px">
-<h3>➕ افزودن رضایت جدید</h3>
+
 <form id="reviewForm" class="review-form">
 <div class="field">
-<label for="reviewName">نام یا آیدی خریدار</label>
-<input id="reviewName" maxlength="80" required placeholder="@username">
+<label>نام یا آیدی خریدار</label>
+<input id="reviewName" required placeholder="@username">
 </div>
 <div class="field">
-<label for="reviewImage">📷 عکس رضایت</label>
+<label>عکس رضایت</label>
 <input id="reviewImage" type="file" accept="image/*" required>
 </div>
 <div class="field full">
-<label for="reviewText">متن رضایت</label>
-<textarea id="reviewText" maxlength="1000" required></textarea>
+<label>متن رضایت</label>
+<textarea id="reviewText" required></textarea>
 </div>
-<div class="field full">
-<img id="reviewPreview" class="review-preview" alt="پیش‌نمایش عکس">
-</div>
-<div class="actions full">
-<button class="buy" type="submit">✅ انتشار رضایت</button>
-</div>
-<div id="reviewAdminSuccess" class="success full"></div>
+<img id="reviewPreview" class="review-preview full" alt="پیش‌نمایش">
+<button class="buy full" type="submit">انتشار رضایت</button>
 </form>
-</div>
-<div class="section">
-<h3>📋 رضایت‌های ثبت‌شده</h3>
-<div id="reviewAdminList" class="review-admin-list"></div>
-</div>
+
+<h3 class="section">رضایت‌های ثبت‌شده</h3>
+<div id="reviewAdminList"></div>
 </div>
 </div>
-<div class="admin-overlay" id="ordersOverlay">
-<div class="admin-modal">
+
+<!-- مدیریت سفارش ها -->
+<div class="overlay" id="ordersOverlay">
+<div class="modal">
 <div class="admin-head">
-<div>
 <h2>🧾 سفارش‌ها</h2>
-<div class="sub">سفارش‌های ذخیره‌شده در همین مرورگر</div>
-</div>
-<div class="admin-actions">
-<button class="admin-btn" id="exportOrders">📥 خروجی JSON</button>
-<button class="admin-btn danger" id="clearOrders">🗑️ حذف همه</button>
-<button class="admin-btn" id="closeOrders">✕ بستن</button>
+<div class="actions">
+<button class="admin-btn" id="exportOrders">خروجی JSON</button>
+<button class="admin-btn" id="clearOrders">حذف همه</button>
+<button class="admin-btn" id="closeOrders">بستن</button>
 </div>
 </div>
-<div class="admin-stats">
-<div class="admin-stat"><b id="orderCount">۰</b>تعداد سفارش‌ها</div>
-<div class="admin-stat"><b id="orderTotal">۰ تومان</b>مجموع مبالغ</div>
-<div class="admin-stat"><b id="lastOrder">—</b>آخرین سفارش</div>
+
+<div class="stats">
+<div class="stat"><b id="orderCount">۰</b>تعداد سفارش</div>
+<div class="stat"><b id="orderTotal">۰</b>مجموع مبالغ</div>
+<div class="stat"><b id="lastOrder">—</b>آخرین سفارش</div>
 </div>
+
 <div class="orders-wrap">
 <table class="orders-table">
-<thead><tr>
-<th>ردیف</th><th>زمان</th><th>نوع تبلیغ</th>
-<th>مبلغ</th><th>آیدی روبیکا</th><th>جزئیات</th>
-</tr></thead>
+<thead>
+<tr>
+<th>ردیف</th>
+<th>زمان</th>
+<th>تبلیغ</th>
+<th>مبلغ</th>
+<th>آیدی</th>
+<th>جزئیات</th>
+</tr>
+</thead>
 <tbody id="ordersBody"></tbody>
 </table>
-<div class="empty-orders" id="emptyOrders">هنوز سفارشی ثبت نشده است.</div>
 </div>
 </div>
 </div>
+
 <div class="wrap">
 
 <div class="channel-ad">
 <h2>🐉 کانال رسمی دراگن استیو</h2>
-<p>مودهای ماینکرافت، اخبار و مطالب جذاب دنیای بازی</p>
-<a href="https://rubika.ir/ARIA22626" target="_blank" rel="noopener">
-🚀 عضویت در کانال روبیکا
-</a>
+<p class="sub">مودهای ماینکرافت، اخبار و مطالب جذاب دنیای بازی</p>
+<a href="https://rubika.ir/ARIA22626" target="_blank" rel="noopener">🚀 عضویت در کانال روبیکا</a>
 </div>
+
 <section class="hero">
 <div class="dragon">🔥🐉</div>
 <h1>دراگن استیو | Dragon Steve</h1>
-<div class="sub">فروش تبلیغات در روبیکا با تعرفه‌های ویژه و عادی</div>
+<p class="sub">فروش تبلیغات در روبیکا با تعرفه‌های ویژه و عادی</p>
 <div class="stats">
 <div class="stat"><b>+400K</b>پیوی ویژه</div>
-<div class="stat"><b>+60k</b>گروه ویژه</div>
+<div class="stat"><b>+60K</b>گروه ویژه</div>
 <div class="stat"><b>24/7</b>ثبت سفارش آنلاین</div>
 </div>
 </section>
+
 <div class="tabs">
 <button class="tab active" data-tab="special">⭐ تبلیغات ویژه</button>
 <button class="tab" data-tab="normal">📢 تبلیغات عادی</button>
@@ -332,13 +390,16 @@ body[data-theme="light"] .review-text{color:#343b4b}
 <button class="tab" data-tab="reviews">💬 رضایت خریداران</button>
 </div>
 
+<!-- ویژه -->
 <section id="special" class="section">
 <h2>⭐ تبلیغات ویژه</h2>
-<div class="sub">بسته‌های ویژه برای دیده‌شدن گسترده‌تر</div>
-<div class="grid" style="margin-top:16px">
+<p class="sub">بسته‌های ویژه برای دیده‌شدن گسترده‌تر</p>
+
+<div class="grid">
+
 <article class="card">
 <span class="tag">پیوی ویژه</span>
-<h3 style="margin-top:12px">+۴۰۰ هزار پیوی</h3>
+<h3>+۴۰۰ هزار پیوی</h3>
 <div class="price">۸۰٬۰۰۰ <small>تومان</small></div>
 <ul class="features">
 <li>تبلیغ در پیوی کاربران</li>
@@ -346,177 +407,440 @@ body[data-theme="light"] .review-text{color:#343b4b}
 </ul>
 <button class="buy" data-plan="تبلیغات ویژه پیوی +۴۰۰K" data-price="80000">خرید و ثبت سفارش</button>
 </article>
+
 <article class="card">
 <span class="tag">گروه ویژه</span>
-<h3 style="margin-top:12px">+۶۰ هزار گروه</h3>
+<h3>+۶۰ هزار گروه</h3>
 <div class="price">۱۰۰٬۰۰۰ <small>تومان</small></div>
 <ul class="features">
 <li>تبلیغ در گروه‌های موجود در شبکه</li>
 <li>بازه انتشار طبق هماهنگی</li>
 </ul>
-<button class="buy" data-plan="تبلیغات ویژه گروه +۶۰k" data-price="100000">خرید و ثبت سفارش</button>
+<button class="buy" data-plan="تبلیغات ویژه گروه +۶۰K" data-price="100000">خرید و ثبت سفارش</button>
 </article>
+
 <article class="card">
 <span class="tag">بسته ترکیبی</span>
-<h3 style="margin-top:12px">پیوی + گروه</h3>
-<div class="price">۳۸۰٬۰۰۰ <small>تومان</small></div>
+<h3>پیوی + گروه</h3>
+<div class="price">۱۷۰٬۰۰۰ <small>تومان</small></div>
 <ul class="features">
 <li>پیوی ویژه +۴۰۰K</li>
 <li>گروه ویژه +۶۰K</li>
 </ul>
 <button class="buy" data-plan="تبلیغات ویژه ترکیبی" data-price="170000">خرید و ثبت سفارش</button>
 </article>
+
 </div>
+
 <div class="note">
-بعد از هماهنگی پرداخت، برای تبلیغات ویژه به <b>@DragonStev</b> در روبیکا پیام بدهید.
+برای تبلیغات ویژه به <b>@DragonStev</b> در روبیکا پیام بدهید.
 </div>
 </section>
+
+<!-- عادی -->
 <section id="normal" class="section hidden">
 <h2>📢 تبلیغات عادی</h2>
-<div class="sub">تعرفه‌های انتشار در پیوی، گروه و کانال</div>
-<div class="grid" style="margin-top:16px">
+<p class="sub">تعرفه‌های انتشار در پیوی، گروه و کانال</p>
+
+<div class="grid">
+
 <article class="card">
 <span class="tag">پیوی کاربران ربات</span>
-<h3 style="margin-top:12px">تبلیغ در پیوی</h3>
+<h3>تبلیغ در پیوی</h3>
 <div class="price">۲۰٬۰۰۰ <small>تومان</small></div>
-<ul class="features"><li>انتشار برای کاربران ربات</li><li>پس از تأیید پرداخت، سفارش اجرا می‌شود.</li></ul>
+<ul class="features"><li>انتشار برای کاربران ربات</li></ul>
 <button class="buy" data-plan="تبلیغات عادی پیوی کاربران ربات" data-price="20000">ثبت سفارش</button>
 </article>
+
 <article class="card">
 <span class="tag">گروه‌های ربات</span>
-<h3 style="margin-top:12px">تبلیغ در گروه</h3>
+<h3>تبلیغ در گروه</h3>
 <div class="price">۱۰٬۰۰۰ <small>تومان</small></div>
-<ul class="features"><li>انتشار در گروه‌های ربات</li><li>پس از تأیید پرداخت، سفارش اجرا می‌شود.</li></ul>
+<ul class="features"><li>انتشار در گروه‌های ربات</li></ul>
 <button class="buy" data-plan="تبلیغات عادی گروه‌های ربات" data-price="10000">ثبت سفارش</button>
 </article>
+
 <article class="card">
-<span class="tag">کانال · ۱ روزه</span>
-<h3 style="margin-top:12px">تبلیغ کانال</h3>
+<span class="tag">کانال یک روزه</span>
+<h3>تبلیغ کانال</h3>
 <div class="price">۵۰٬۰۰۰ <small>تومان</small></div>
-<ul class="features"><li>۱۲ ساعت سنجاق</li><li>۱ تبلیغ پیوی</li><li>مهلت استفاده از تبلیغ پیوی: ۱ ماه</li></ul>
+<ul class="features">
+<li>۱۲ ساعت سنجاق</li>
+<li>۱ تبلیغ پیوی</li>
+<li>مهلت استفاده: یک ماه</li>
+</ul>
 <button class="buy" data-plan="تبلیغات کانال ۱ روزه" data-price="50000">ثبت سفارش</button>
 </article>
+
 <article class="card">
-<span class="tag">کانال · ۱ هفته‌ای</span>
-<h3 style="margin-top:12px">تبلیغ کانال</h3>
+<span class="tag">کانال یک هفته‌ای</span>
+<h3>تبلیغ کانال</h3>
 <div class="price">۱۰۰٬۰۰۰ <small>تومان</small></div>
-<ul class="features"><li>۱ روز سنجاق</li><li>۲ تبلیغ پیوی</li><li>مهلت استفاده از تبلیغ‌های پیوی: ۱ ماه</li></ul>
+<ul class="features">
+<li>یک روز سنجاق</li>
+<li>۲ تبلیغ پیوی</li>
+<li>مهلت استفاده: یک ماه</li>
+</ul>
 <button class="buy" data-plan="تبلیغات کانال ۱ هفته‌ای" data-price="100000">ثبت سفارش</button>
 </article>
+
 <article class="card">
-<span class="tag">کانال · ۱ ماهه</span>
-<h3 style="margin-top:12px">تبلیغ کانال</h3>
+<span class="tag">کانال یک ماهه</span>
+<h3>تبلیغ کانال</h3>
 <div class="price">۲۰۰٬۰۰۰ <small>تومان</small></div>
-<ul class="features"><li>۱ هفته سنجاق</li><li>۴ تبلیغ پیوی کاربران</li><li>مهلت استفاده از تبلیغ‌های پیوی: ۱ ماه</li></ul>
+<ul class="features">
+<li>یک هفته سنجاق</li>
+<li>۴ تبلیغ پیوی</li>
+<li>مهلت استفاده: یک ماه</li>
+</ul>
 <button class="buy" data-plan="تبلیغات کانال ۱ ماهه" data-price="200000">ثبت سفارش</button>
 </article>
 
 </div>
 </section>
+
+<!-- سفارش -->
 <section id="order" class="section hidden">
 <div class="card">
 <h2>🧾 ثبت سفارش</h2>
-<div class="sub">اطلاعات سفارش را وارد کنید. پرداخت مستقیم بانکی در این سایت فعال نیست.</div>
-<form id="orderForm" class="form" style="margin-top:16px">
+<p class="sub">اطلاعات سفارش را وارد کنید. پرداخت مستقیم بانکی فعال نیست.</p>
+
+<form id="orderForm" class="form">
+
 <div class="field">
-<label for="plan">نوع تبلیغ</label>
+<label>نوع تبلیغ</label>
 <select id="plan" required>
 <option value="">انتخاب کنید</option>
-<option value="تبلیغات ویژه پیوی +۴۰۰K" data-price="80000">ویژه پیوی +۴۰۰K — ۸۰٬۰۰۰ تومان</option>
-<option value="تبلیغات ویژه گروه +۶۰K" data-price="100000">ویژه گروه +۶۰K — ۱۰۰٬۰۰۰ تومان</option>
-<option value="تبلیغات ویژه ترکیبی" data-price="170000">ویژه ترکیبی — ۱۷۰۰۰۰ تومان</option>
-<option value="تبلیغات عادی پیوی کاربران ربات" data-price="20000">عادی پیوی — ۲۰٬۰۰۰ تومان</option>
-<option value="تبلیغات عادی گروه‌های ربات" data-price="10000">عادی گروه — ۱۰٬۰۰۰ تومان</option>
-<option value="تبلیغات کانال ۱ روزه" data-price="50000">کانال ۱ روزه — ۵۰٬۰۰۰ تومان</option>
-<option value="تبلیغات کانال ۱ هفته‌ای" data-price="100000">کانال ۱ هفته‌ای — ۱۰۰٬۰۰۰ تومان</option>
-<option value="تبلیغات کانال ۱ ماهه" data-price="200000">کانال ۱ ماهه — ۲۰۰٬۰۰۰ تومان</option>
+<option value="تبلیغات ویژه پیوی +۴۰۰K" data-price="80000">ویژه پیوی +۴۰۰K - ۸۰٬۰۰۰ تومان</option>
+<option value="تبلیغات ویژه گروه +۶۰K" data-price="100000">ویژه گروه +۶۰K - ۱۰۰٬۰۰۰ تومان</option>
+<option value="تبلیغات ویژه ترکیبی" data-price="170000">ویژه ترکیبی - ۱۷۰٬۰۰۰ تومان</option>
+<option value="تبلیغات عادی پیوی کاربران ربات" data-price="20000">عادی پیوی - ۲۰٬۰۰۰ تومان</option>
+<option value="تبلیغات عادی گروه‌های ربات" data-price="10000">عادی گروه - ۱۰٬۰۰۰ تومان</option>
+<option value="تبلیغات کانال ۱ روزه" data-price="50000">کانال یک روزه - ۵۰٬۰۰۰ تومان</option>
+<option value="تبلیغات کانال ۱ هفته‌ای" data-price="100000">کانال یک هفته‌ای - ۱۰۰٬۰۰۰ تومان</option>
+<option value="تبلیغات کانال ۱ ماهه" data-price="200000">کانال یک ماهه - ۲۰۰٬۰۰۰ تومان</option>
 </select>
 </div>
+
 <div class="field">
-<label for="rubika">آیدی روبیکا</label>
+<label>آیدی روبیکا</label>
 <input id="rubika" placeholder="@username" required>
 </div>
 
 <div class="field full">
-<label for="details">جزئیات تبلیغ</label>
+<label>جزئیات تبلیغ</label>
 <textarea id="details" placeholder="متن تبلیغ، لینک و توضیحات لازم را بنویسید." required></textarea>
 </div>
+
 <div class="paybox full">
 <b>💳 هماهنگی پرداخت</b>
-<div>برای دریافت روش پرداخت با مدیریت در روبیکا هماهنگ کنید.</div>
-<a href="https://rubika.ir/DragonStev" target="_blank" rel="noopener"><b>@DragonStev</b></a>
-<div style="color:var(--muted);font-size:13px">اطلاعات بانکی را داخل کد عمومی سایت قرار ندهید.</div>
+<p>برای دریافت روش پرداخت با مدیریت هماهنگ کنید.</p>
+<a href="https://rubika.ir/DragonStev" target="_blank">@DragonStev</a>
 </div>
 
 <div class="field full">
-<label><input type="checkbox" id="paid" required style="width:auto">
-اطلاعات سفارش را بررسی کرده‌ام و آماده ارسال است.
+<label>
+<input type="checkbox" id="paid" required style="width:auto">
+اطلاعات سفارش را بررسی کرده‌ام.
 </label>
 </div>
+
 <div class="actions full">
-<button class="buy" type="submit" style="max-width:260px">ارسال سفارش</button>
+<button class="buy" type="submit">ارسال سفارش</button>
 <button class="secondary" type="button" id="copyOrder">کپی متن سفارش</button>
 </div>
+
 <div id="success" class="success full"></div>
 </form>
 </div>
 </section>
 
+<!-- رضایت -->
 <section id="reviews" class="section hidden">
 <div class="card">
 <h2>💬 رضایت خریداران</h2>
-<div class="sub">رضایت‌هایی که مدیریت تأیید و منتشر کرده است.</div>
+<p class="sub">رضایت‌های منتشرشده توسط مدیریت</p>
 <div id="reviewsGrid" class="reviews-grid"></div>
 </div>
 </section>
+
 <div class="footer">
 🔥🐉 Dragon Steve • @GiiNovaBot<br>
 برای تبلیغات ویژه: @DragonStev در روبیکا
 </div>
+
 </div>
 
 <script>
-const fmt = n => new Intl.NumberFormat('fa-IR').format(Number(n)) + ' تومان';
+const $ = id => document.getElementById(id);
 
-// =====================================
-// 🌗 سیستم تغییر حالت روشن و تاریک
-// =====================================
+const getData = key => {
+try{return JSON.parse(localStorage.getItem(key)||'[]')}
+catch(e){return []}
+};
 
-const themeBtn = document.getElementById('themeBtn');
-function setTheme(theme) {
-    document.body.dataset.theme = theme;
-    document.documentElement.dataset.theme = theme;
-    localStorage.setItem('dragonSteveTheme', theme);
+const saveData = (key,data) => {
+localStorage.setItem(key,JSON.stringify(data));
+};
 
-    if (themeBtn) {
-        themeBtn.textContent =
-            theme === 'light' ? '🌙 حالت تاریک' : '🌞 حالت روشن';
-    }
+const fmt = n => Number(n).toLocaleString('fa-IR');
+
+const ADMIN_PASSWORD = 'dragon2026';
+
+let adminAction = '';
+
+/* تم */
+function setTheme(theme){
+document.body.dataset.theme=theme;
+$('themeBtn').textContent=
+theme==='light'?'🌙 حالت تاریک':'🌞 حالت روشن';
+localStorage.setItem('dragonSteveTheme',theme);
 }
 
-setTheme(localStorage.getItem('dragonSteveTheme') || 'dark');
-if (themeBtn) {
-    themeBtn.addEventListener('click', () => {
-        const current = document.body.dataset.theme;
-        setTheme(current === 'dark' ? 'light' : 'dark');
-    });
+setTheme(localStorage.getItem('dragonSteveTheme')||'dark');
+
+$('themeBtn').addEventListener('click',()=>{
+setTheme(document.body.dataset.theme==='dark'?'light':'dark');
+});
+
+/* منو */
+$('menuBtn').addEventListener('click',()=>{
+$('sideMenu').classList.toggle('open');
+});
+
+document.addEventListener('click',e=>{
+if(!$('sideMenu').contains(e.target)&&!$('menuBtn').contains(e.target)){
+$('sideMenu').classList.remove('open');
+}
+});
+
+/* تب ها */
+function showTab(id){
+document.querySelectorAll('.tab').forEach(b=>{
+b.classList.toggle('active',b.dataset.tab===id);
+});
+
+document.querySelectorAll('section[id]').forEach(s=>{
+s.classList.toggle('hidden',s.id!==id);
+});
+
+window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// =====================================
-// 📑 سیستم تب ها
-// =====================================
+document.querySelectorAll('.tab').forEach(btn=>{
+btn.addEventListener('click',()=>showTab(btn.dataset.tab));
+});
 
-document.querySelectorAll('.tab').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(x =>
-            x.classList.remove('active')
-        );
-        btn.classList.add('active');
+/* انتخاب بسته */
+document.querySelectorAll('[data-plan][data-price]').forEach(btn=>{
+btn.addEventListener('click',()=>{
+$('plan').value=btn.dataset.plan;
+showTab('order');
+});
+});
 
-        document.querySelectorAll('section[id]').forEach(s =>
-            s.classList.add('hidden')
-        );
+/* فرم سفارش */
+function orderText(){
+const plan=$('plan').value;
+const option=$('plan').selectedOptions[0];
+const price=option?.dataset.price||'0';
 
-        const target = document.getElementById(btn.dataset.tab);
+return `🐉 سفارش تبلیغات دراگن استیو
 
-        if (target) target.classList.remove('hidden
+نوع تبلیغ: ${plan}
+مبلغ: ${fmt(price)} تومان
+آیدی روبیکا: ${$('rubika').value}
+جزئیات:
+${$('details').value}`;
+}
+
+$('copyOrder').addEventListener('click',async()=>{
+if(!$('plan').value||!$('rubika').value||!$('details').value){
+alert('لطفاً ابتدا اطلاعات سفارش را کامل کنید.');
+return;
+}
+
+try{
+await navigator.clipboard.writeText(orderText());
+alert('متن سفارش کپی شد.');
+}catch(e){
+alert('کپی خودکار در این مرورگر پشتیبانی نمی‌شود.');
+}
+});
+
+$('orderForm').addEventListener('submit',e=>{
+e.preventDefault();
+
+const option=$('plan').selectedOptions[0];
+const price=Number(option.dataset.price);
+
+const order={
+plan:$('plan').value,
+price,
+rubika:$('rubika').value,
+details:$('details').value,
+date:new Date().toLocaleString('fa-IR')
+};
+
+const orders=getData('dragonSteveOrders');
+orders.push(order);
+
+try{
+saveData('dragonSteveOrders',orders);
+$('success').style.display='block';
+$('success').textContent='سفارش در این مرورگر ذخیره شد. برای هماهنگی و ارسال سفارش به مدیریت پیام بدهید.';
+}catch(err){
+alert('فضای ذخیره‌سازی مرورگر کافی نیست.');
+}
+});
+
+/* پنجره مدیریت */
+function openAdmin(action){
+adminAction=action;
+$('passwordError').textContent='';
+$('adminPassword').value='';
+$('passwordOverlay').classList.add('open');
+$('sideMenu').classList.remove('open');
+}
+
+$('openPurchases').addEventListener('click',()=>openAdmin('orders'));
+$('openReviews').addEventListener('click',()=>openAdmin('reviews'));
+
+$('closePassword').addEventListener('click',()=>{
+$('passwordOverlay').classList.remove('open');
+});
+
+$('loginAdmin').addEventListener('click',()=>{
+if($('adminPassword').value!==ADMIN_PASSWORD){
+$('passwordError').textContent='رمز واردشده اشتباه است.';
+return;
+}
+
+$('passwordOverlay').classList.remove('open');
+
+if(adminAction==='orders'){
+renderOrders();
+$('ordersOverlay').classList.add('open');
+}
+
+if(adminAction==='reviews'){
+renderReviewAdmin();
+$('reviewsOverlay').classList.add('open');
+}
+});
+
+$('adminPassword').addEventListener('keydown',e=>{
+if(e.key==='Enter')$('loginAdmin').click();
+});
+
+/* سفارش ها */
+function renderOrders(){
+const orders=getData('dragonSteveOrders');
+$('ordersBody').innerHTML='';
+
+orders.forEach((o,i)=>{
+const tr=document.createElement('tr');
+
+[o.date,o.plan,fmt(o.price)+' تومان',o.rubika,o.details]
+.forEach(value=>{
+const td=document.createElement('td');
+td.textContent=value;
+tr.appendChild(td);
+});
+
+const num=document.createElement('td');
+num.textContent=fmt(i+1);
+tr.insertBefore(num,tr.firstChild);
+
+$('ordersBody').appendChild(tr);
+});
+
+$('orderCount').textContent=fmt(orders.length);
+
+$('orderTotal').textContent=
+fmt(orders.reduce((sum,o)=>sum+Number(o.price||0),0))+' تومان';
+
+$('lastOrder').textContent=
+orders.length?orders[orders.length-1].date:'—';
+}
+
+$('closeOrders').addEventListener('click',()=>{
+$('ordersOverlay').classList.remove('open');
+});
+
+$('clearOrders').addEventListener('click',()=>{
+if(!confirm('همه سفارش‌ها حذف شوند؟'))return;
+saveData('dragonSteveOrders',[]);
+renderOrders();
+});
+
+$('exportOrders').addEventListener('click',()=>{
+const data=JSON.stringify(getData('dragonSteveOrders'),null,2);
+const blob=new Blob([data],{type:'application/json'});
+const url=URL.createObjectURL(blob);
+const a=document.createElement('a');
+a.href=url;
+a.download='dragon-steve-orders.json';
+a.click();
+URL.revokeObjectURL(url);
+});
+
+/* رضایت ها */
+$('reviewImage').addEventListener('change',()=>{
+const file=$('reviewImage').files[0];
+if(!file)return;
+
+if(!file.type.startsWith('image/')){
+alert('لطفاً فایل عکس انتخاب کنید.');
+return;
+}
+
+if(file.size>1500000){
+alert('حجم عکس باید کمتر از ۱٫۵ مگابایت باشد.');
+$('reviewImage').value='';
+return;
+}
+
+const reader=new FileReader();
+
+reader.onload=()=>{
+$('reviewPreview').src=reader.result;
+$('reviewPreview').style.display='block';
+};
+
+reader.readAsDataURL(file);
+});
+
+$('reviewForm').addEventListener('submit',e=>{
+e.preventDefault();
+
+const image=$('reviewPreview').src;
+if(!image||image===''){
+alert('لطفاً عکس رضایت را انتخاب کنید.');
+return;
+}
+
+const reviews=getData('dragonSteveReviews');
+
+reviews.push({
+name:$('reviewName').value,
+text:$('reviewText').value,
+image,
+date:new Date().toLocaleDateString('fa-IR')
+});
+
+try{
+saveData('dragonSteveReviews',reviews);
+$('reviewForm').reset();
+$('reviewPreview').src='';
+$('reviewPreview').style.display='none';
+renderReviewAdmin();
+renderReviews();
+alert('رضایت با موفقیت اضافه شد.');
+}catch(err){
+alert('فضای ذخیره‌سازی کافی نیست. عکس کوچک‌تری انتخاب کنید.');
+}
+});
+
+function renderReviews(){
+const reviews=getData('dra
